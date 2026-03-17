@@ -1,0 +1,60 @@
+<div class="h-full flex flex-col">
+
+  <!-- Empty state -->
+  <div *ngIf="!image" class="h-full flex flex-col items-center justify-center text-gray-500">
+    <!-- <img src="assets/placeholder.png" class="w-16 h-16 mb-4 opacity-40" alt="placeholder"
+         onerror="this.style.display='none'"/> -->
+    <p class="text-lg font-medium">Select an image to preview</p>
+    <p class="text-sm mt-1">Open the sidebar to upload or select an image</p>
+  </div>
+
+  <!-- Image loaded -->
+  @if (image) {
+    <div class="h-full flex flex-col">
+
+      <!-- Image display -->
+      <div class="flex-1 flex items-center justify-center p-6 min-h-0">
+        @if (image.status === 'COMPLETED' && image.largeUrl) {
+          <img
+            [src]="image.largeUrl"
+            [alt]="image.fileName"
+            class="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+          />
+        } @else if (image.originalUrl) {
+          <img
+            [src]="image.originalUrl"
+            [alt]="image.fileName"
+            class="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+          />
+        } @else {
+          <div class="flex flex-col items-center justify-center text-gray-400">
+            <div class="w-24 h-24 rounded-full bg-gray-700 flex items-center justify-center mb-4">
+              <span class="text-4xl">🖼️</span>
+            </div>
+            <p>Processing image...</p>
+          </div>
+        }
+      </div>
+
+      <!-- Image info bar -->
+      <div class="border-t border-gray-700 px-6 py-3 flex items-center justify-between bg-gray-800 shrink-0">
+        <div class="flex items-center gap-4">
+          <span class="text-white font-medium text-sm">{{ image.fileName }}</span>
+          <app-status-badge [status]="image.status"></app-status-badge>
+        </div>
+        <div class="flex items-center gap-6 text-gray-400 text-xs">
+          @if (image.status === 'COMPLETED') {
+            <span>✅ Processed</span>
+          } @else if (image.status === 'PROCESSING') {
+            <span class="animate-pulse">⚙️ Processing...</span>
+          } @else if (image.status === 'FAILED') {
+            <span class="text-red-400">❌ Failed</span>
+          }
+          <span>{{ image.createdAt | date:'dd MMM yyyy, HH:mm' }}</span>
+        </div>
+      </div>
+
+    </div>
+  }
+
+</div>

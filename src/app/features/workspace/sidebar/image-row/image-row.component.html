@@ -1,0 +1,20 @@
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors"
+     [class.bg-gray-700]="isSelected"
+     (click)="onClick()">
+  
+  <!-- Thumbnail -->
+  <div class="w-10 h-10 rounded shrink-0 overflow-hidden bg-gray-600">
+    @if (image.thumbnailUrl) {
+      <img [src]="image.thumbnailUrl" [alt]="image.fileName" class="w-full h-full object-cover"/>
+    } @else {
+      <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">🖼️</div>
+    }
+  </div>
+
+  <!-- Info -->
+  <div class="flex flex-col min-w-0 flex-1">
+    <span class="text-white text-xs font-medium truncate">{{ image.fileName }}</span>
+    <app-status-badge [status]="image.status"></app-status-badge>
+  </div>
+
+</div>

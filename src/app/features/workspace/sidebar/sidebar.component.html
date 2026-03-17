@@ -1,0 +1,52 @@
+<div class="flex flex-col h-full bg-gray-800 w-72">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between p-4 border-b border-gray-700">
+    <h2 class="text-white font-semibold text-lg">My Images</h2>
+    <button (click)="closeSidebar.emit()" class="text-gray-400 hover:text-white transition">
+      ✕
+    </button>
+  </div>
+
+  <!-- Upload Button -->
+  <div class="p-4">
+    <button
+      (click)="onUploadClick()"
+      [disabled]="isUploading"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition disabled:opacity-50">
+      {{ isUploading ? 'Uploading...' : '+ Upload Image' }}
+    </button>
+  </div>
+
+  <!-- Image List -->
+  <div class="flex-1 overflow-y-auto px-3 space-y-1">
+
+    @if (isLoading && images.length === 0) {
+      <div class="text-gray-400 text-sm text-center py-8">Loading...</div>
+    }
+
+    @if (!isLoading && images.length === 0) {
+      <div class="text-gray-400 text-sm text-center py-8">No images yet. Upload one!</div>
+    }
+
+    @for (image of images; track image.id) {
+      <app-image-row
+        [image]="image"
+        [isSelected]="image.id === selectedImageId"
+        (imageSelected)="onImageSelected($event)" />
+    }
+
+    @if (hasMore) {
+      <div class="py-3 text-center">
+        <button
+          (click)="loadMore()"
+          [disabled]="isLoading"
+          class="text-blue-400 hover:text-blue-300 text-sm transition disabled:opacity-50">
+          {{ isLoading ? 'Loading...' : 'See More' }}
+        </button>
+      </div>
+    }
+
+  </div>
+
+</div>

@@ -1,0 +1,49 @@
+<div class="h-screen bg-slate-950 text-white flex flex-col overflow-hidden">
+
+  <!-- Top Header -->
+  <header class="h-14 border-b border-slate-800 bg-slate-900/95 flex items-center justify-between px-4 shrink-0">
+    <div class="flex items-center gap-3">
+      <button
+        (click)="toggleSidebar()"
+        class="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+      >
+        ☰
+      </button>
+
+      <div>
+        <h1 class="text-lg font-semibold leading-none">Image AI Platform</h1>
+        <p class="text-xs text-slate-400 mt-0.5">Upload, process and chat with images</p>
+      </div>
+    </div>
+
+    <button
+      (click)="logout()"
+      class="text-sm bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
+    >
+      Logout
+    </button>
+  </header>
+
+  <!-- Main Workspace -->
+  <div class="flex-1 min-h-0 flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside
+      [class.hidden]="!sidebarOpen"
+      class="w-80 border-r border-slate-800 bg-slate-900 shrink-0 min-h-0"
+    >
+      <app-sidebar (imageSelected)="onImageSelected($event)"></app-sidebar>
+    </aside>
+
+    <!-- Center Preview -->
+    <main class="flex-1 min-w-0 bg-slate-950 min-h-0">
+      <app-image-preview [image]="selectedImage"></app-image-preview>
+    </main>
+
+    <!-- Chat Panel -->
+    <section class="w-[400px] border-l border-slate-800 bg-slate-900 shrink-0 min-h-0">
+      <app-chat-panel [image]="selectedImage"></app-chat-panel>
+    </section>
+
+  </div>
+</div>

@@ -1,59 +1,122 @@
-# ImageAiApp
+# Image AI App Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.1.
+Angular frontend for a full-stack AI-powered image application, deployed on **AWS S3 + CloudFront**.
 
-## Development server
+## Overview
 
-To start a local development server, run:
+This frontend provides the user-facing interface for the Image AI application.  
+It is built with **Angular** and designed to work with a Spring Boot backend hosted on **AWS ECS Fargate**.
 
-```bash
-ng serve
-```
+The app was deployed as a static frontend using:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Amazon S3** for hosting build assets
+- **Amazon CloudFront** for CDN delivery
+- Angular production build output for optimized static deployment
 
-## Code scaffolding
+## Tech Stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Angular
+- TypeScript
+- HTML / CSS
+- AWS S3
+- AWS CloudFront
 
-```bash
-ng generate component component-name
-```
+## Key Features
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- User-friendly frontend for the Image AI application
+- Registration and login flows
+- API integration with backend services
+- Static frontend deployment through CloudFront CDN
+- Production-ready Angular build setup
 
-```bash
-ng generate --help
-```
+## Deployment
 
-## Building
+The frontend is deployed using:
 
-To build the project run:
+- **S3** to store the Angular production build files
+- **CloudFront** to serve the frontend globally over HTTPS
 
-```bash
-ng build
-```
+### Deployment Flow
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+1. Build Angular app
+2. Upload build output to S3
+3. Serve via CloudFront
+4. Configure SPA routing with `index.html`
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Build Command
 
 ```bash
-ng e2e
+npm install
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Production build output is generated under:
 
-## Additional Resources
+```bash
+dist/image-ai-app/browser
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Local Development
+
+```bash
+npm install
+npm start
+```
+
+The app runs locally on Angular dev server.
+
+## Project Structure
+
+```bash
+src/
+├── app/
+├── assets/
+├── environments/
+├── styles.css
+├── main.ts
+```
+
+## AWS Architecture
+
+This frontend is part of a larger AWS deployment:
+
+- **Frontend:** Angular on S3 + CloudFront
+- **Backend:** Spring Boot on ECS Fargate
+- **Database:** PostgreSQL on RDS
+- **Container Registry:** Amazon ECR
+
+## Notes
+
+The frontend currently communicates with the deployed backend API.  
+A further enhancement is to route backend API calls through a stable ALB-based path for a single-domain production setup.
+
+## Screenshots
+
+Add screenshots here:
+
+- Home page
+- Login page
+- Register page
+- CloudFront deployment screenshot
+
+## What I Learned
+
+This project helped me gain hands-on experience with:
+
+- Angular production builds
+- Static frontend deployment on AWS
+- CloudFront distribution setup
+- SPA routing configuration for static hosting
+- Integrating frontend and backend in a cloud environment
+
+## Future Improvements
+
+- Stable backend API routing through ALB
+- Custom domain configuration
+- HTTPS end-to-end backend integration
+- CI/CD pipeline for automated deployments
+
+## Author
+
+Kavya M
+
