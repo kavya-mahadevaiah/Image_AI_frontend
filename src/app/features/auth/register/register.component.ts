@@ -20,14 +20,22 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    if (this.isLoading) return;
+  if (this.isLoading) return;
+  
+  // Client-side validation
+  if (!this.email.includes('@')) {
+    this.errorMessage = 'Please enter a valid email address.';
+    return;
+  }
+  if (this.password.length < 8) {
+    this.errorMessage = 'Password must be at least 8 characters.';
+    return;
+  }
+  if (!this.name.trim()) {
+    this.errorMessage = 'Please enter your name.';
+    return;
+  }
 
-    console.log('REGISTER submit clicked');
-    console.log('REGISTER payload', {
-      name: this.name,
-      email: this.email,
-      passwordLength: this.password.length
-    });
 
     this.isLoading = true;
     this.errorMessage = '';
@@ -42,10 +50,17 @@ export class RegisterComponent {
         this.router.navigate(['/workspace']);
       },
       error: (err) => {
-        console.error('REGISTER error', err);
-        this.errorMessage = err?.error?.message || 'Registration failed. Please try again.';
-        this.isLoading = false;
-      }
+  this.isLoading = false;
+  if (err.status === 400) {
+    this.errorMessage = err.error?.message || 'Invalid details. Check your email and password.';
+  } else if (err.status === 409) {
+    this.errorMessage = 'Email already registered. Please login.';
+  } else if (err.status === 0) {
+    this.errorMessage = 'Cannot reach server. Please try again.';
+  } else {
+    this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
+  }
+}
     });
   }
 }

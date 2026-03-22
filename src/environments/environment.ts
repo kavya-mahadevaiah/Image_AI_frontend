@@ -1,4 +1,5 @@
+// src/environments/environment.prod.ts
 export const environment = {
   production: true,
-  apiUrl: 'http://34.241.49.12:8081'
+  apiUrl: 'https://d29l33lvuvut8q.cloudfront.net/api'
 };

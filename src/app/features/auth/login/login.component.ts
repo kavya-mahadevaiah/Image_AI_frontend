@@ -19,16 +19,22 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
+  this.isLoading = true;
+  this.errorMessage = '';
 
-    this.authService.login({ email: this.email, password: this.password })
-      .subscribe({
-        next: () => this.router.navigate(['/workspace']),
-        error: (err) => {
+  this.authService.login({ email: this.email, password: this.password })
+    .subscribe({
+      next: () => this.router.navigate(['/workspace']),
+      error: (err) => {
+        this.isLoading = false;
+        if (err.status === 401 || err.status === 400) {
+          this.errorMessage = 'Invalid email or password.';
+        } else if (err.status === 0) {
+          this.errorMessage = 'Cannot reach server. Please try again.';
+        } else {
           this.errorMessage = err.error?.message || 'Login failed. Please try again.';
-          this.isLoading = false;
         }
-      });
-  }
+      }
+    });
+}
 }
